@@ -31,7 +31,9 @@ userRouter.post("/login",async(req,res)=>{
     }
     const intermediate = await bcrypt.compare(password,user.password);
     if(intermediate){
-        const token = jwt.sign({username:user.username},process.env.SECRET);
+        const token = jwt.sign({username:user.username},process.env.SECRET,{
+            expiresIn : process.env.JWT_EXPIRES_IN,
+        });
         res.json({
             userID:user._id,
             token,
