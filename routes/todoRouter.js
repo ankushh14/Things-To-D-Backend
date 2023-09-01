@@ -31,4 +31,19 @@ todoRouter.get("/gettodos",async(req,res)=>{
     }
 })
 
+todoRouter.delete("/deletetodo",async(req,res)=>{
+    try{
+    const userID = req.body.userID;
+    await todoModel.findByIdAndDelete(userID);
+    res.json({
+        message:"Delete Succesful!"
+    })
+    }catch(err){
+        console.error(err);
+        res.json({
+            message:"Sorry! Some error occured"
+        })
+    }
+})
+
 export default todoRouter;
