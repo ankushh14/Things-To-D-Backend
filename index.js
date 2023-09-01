@@ -19,3 +19,5 @@ app.use("/todos",todoRouter);
 app.listen(process.env.PORT,()=>{
     console.log("Server Started");
 })
+
+export default app;
