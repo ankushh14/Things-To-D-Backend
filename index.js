@@ -6,17 +6,27 @@ import userRouter from "./routes/userRouter.js";
 import todoRouter from "./routes/todoRouter.js";
 
 const app = express();
-app.use(express.json());
-app.use(cors());
-dotenv.config();
 
-mongoose.connect(`mongodb+srv://ankushshenoy123:${process.env.PASSWORD}@things-to-d-db.iyrerfs.mongodb.net/Things-To-D-Db?retryWrites=true&w=majority`);
+app.use(express.json());
+
+app.use(cors());
+
 app.use("/auth",userRouter);
 app.use("/todos",todoRouter);
 
+dotenv.config();
 
 
-app.listen(process.env.PORT,()=>{
+
+
+app.get("/",(req,res)=>{
+    res.send("Hello");
+})
+
+
+
+app.listen(process.env.PORT,async()=>{
+    await mongoose.connect(`mongodb+srv://ankushshenoy123:${process.env.PASSWORD}@things-to-d-db.iyrerfs.mongodb.net/Things-To-D-Db?retryWrites=true&w=majority`);
     console.log("Server Started");
 })
 
