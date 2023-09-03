@@ -25,10 +25,12 @@ app.get("/",(req,res)=>{
 
 const connectToMongo = async()=>{
     await mongoose.connect(`mongodb+srv://ankushshenoy123:${process.env.PASSWORD}@things-to-d-db.iyrerfs.mongodb.net/Things-To-D-Db?retryWrites=true&w=majority`);
-   console.log("mongoose here");
+    console.log("mongoose here");
 }
+
+connectToMongo();
+
 app.listen(process.env.PORT,()=>{
-    connectToMongo();
     console.log("Server Started");
 })
 
