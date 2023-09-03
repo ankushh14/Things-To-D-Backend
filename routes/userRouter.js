@@ -6,21 +6,18 @@ import jwt from "jsonwebtoken";
 const userRouter = express.Router();
 
 userRouter.post("/register",async(req,res)=>{
-    // const {username,password} = req.body;
-    // const user = await userModel.findOne({username});
-    // if(user){
-    //     return res.json({
-    //         message:"User Already Exists!"
-    //     })
-    // }
-    // const hashPassword = await bcrypt.hash(password,10);
-    // const newUser = new userModel({username,password:hashPassword});
-    // await newUser.save();
-    // res.json({
-    //     message:"User Succesfully Registered!!"
-    // })
+    const {username,password} = req.body;
+    const user = await userModel.findOne({username});
+    if(user){
+        return res.json({
+            message:"User Already Exists!"
+        })
+    }
+    const hashPassword = await bcrypt.hash(password,10);
+    const newUser = new userModel({username,password:hashPassword});
+    await newUser.save();
     res.json({
-        message:"hey route working"
+        message:"User Succesfully Registered!!"
     })
 })
 
