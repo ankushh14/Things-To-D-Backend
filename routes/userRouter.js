@@ -13,8 +13,9 @@ userRouter.post("/register",async(req,res)=>{
             message:"User Already Exists!"
         })
     }
+    const datenow = new Date().toLocaleString("en-Us", {timeZone: 'Asia/Kolkata'});
     const hashPassword = await bcrypt.hash(password,10);
-    const newUser = new userModel({username,password:hashPassword});
+    const newUser = new userModel({username,password:hashPassword,createdAt:datenow});
     await newUser.save();
     res.json({
         message:"User Succesfully Registered!!"
@@ -44,6 +45,11 @@ userRouter.post("/login",async(req,res)=>{
             message:"Invalid Credentials!"
         })
     }
+})
+
+userRouter.get("/getAllUsers",async(req,res)=>{
+    const users = await userModel.find();
+    res.send(users);
 })
 
 export default userRouter;
