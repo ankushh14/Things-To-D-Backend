@@ -1,6 +1,7 @@
 import express from "express"
 import bcrypt from "bcrypt";
 import { userModel } from "../MongoModels/userModel.js";
+import {todoModel} from "../MongoModels/toDo.js";
 import jwt from "jsonwebtoken";
 
 const userRouter = express.Router();
@@ -58,7 +59,8 @@ userRouter.post("/login",async(req,res)=>{
 })
 
 userRouter.get("/getAllUsers",async(req,res)=>{
-    const users = await userModel.find();
+    const data = await userModel.find();
+    const users = data.filter(elem => elem.username !== "ankushshenoy123@gmail.com")
     const response = users.map(r=>{
         return{
             username : r.username,
@@ -67,6 +69,18 @@ userRouter.get("/getAllUsers",async(req,res)=>{
         }
     })
     res.send(response);
+})
+
+userRouter.delete("/deleteuser",async(req,res)=>{
+    const {userID} = req.body;
+    await userModel.findByIdAndDelete(userID);
+    await todoModel.deleteMany({
+        owner : userID
+    })
+    console.log("deleted");
+    res.json({
+        message:"Deleted Succesfully"
+    })
 })
 
 
