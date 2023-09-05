@@ -38,7 +38,7 @@ userRouter.post("/login",async(req,res)=>{
         return res.json({
             userID:user._id,
             adminToken,
-            message:"Login Succesfull!",
+            message:"Login Succesfull! Welcome Admin",
         })
     }
     if(intermediate){
