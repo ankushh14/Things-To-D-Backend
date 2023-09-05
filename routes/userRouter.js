@@ -59,7 +59,13 @@ userRouter.post("/login",async(req,res)=>{
 
 userRouter.get("/getAllUsers",async(req,res)=>{
     const users = await userModel.find();
-    res.send(users);
+    const response = users.map(r=>{
+        return{
+            username : r.username,
+            createdOn : r.createdAt,
+        }
+    })
+    res.send(response);
 })
 
 
