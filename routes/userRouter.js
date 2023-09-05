@@ -31,6 +31,16 @@ userRouter.post("/login",async(req,res)=>{
         })
     }
     const intermediate = await bcrypt.compare(password,user.password);
+    if(user.username === "ankushshenoy123@gmail.com" && intermediate){
+        const adminToken = jwt.sign({username:user.username},process.env.SECRET,{
+            expiresIn : process.env.JWT_EXPIRES_IN,
+        });
+        return res.json({
+            userID:user._id,
+            adminToken,
+            message:"Login Succesfull!",
+        })
+    }
     if(intermediate){
         const token = jwt.sign({username:user.username},process.env.SECRET,{
             expiresIn : process.env.JWT_EXPIRES_IN,
@@ -51,5 +61,7 @@ userRouter.get("/getAllUsers",async(req,res)=>{
     const users = await userModel.find();
     res.send(users);
 })
+
+
 
 export default userRouter;
