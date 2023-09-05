@@ -63,6 +63,7 @@ userRouter.get("/getAllUsers",async(req,res)=>{
         return{
             username : r.username,
             createdOn : r.createdAt,
+            userID : r._id,
         }
     })
     res.send(response);
